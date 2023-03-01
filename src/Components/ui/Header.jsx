@@ -6,7 +6,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Button from "../common/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 
 const Header = () => {
@@ -17,11 +17,13 @@ const Header = () => {
         <Toolbar>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
-            <Link to={"/"}>Todo-Js</Link>
+            <Link to="/">Todo-Js</Link>
           </Typography>
-          <Button onClick={() => navigate("/login")} color="inherit">
-            Login
-          </Button>
+          <Button
+            onClick={() => navigate("/login")}
+            color="inherit"
+            children="Login"
+          />
         </Toolbar>
       </AppBar>
     </Box>

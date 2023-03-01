@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Main from "./Pages/Main";
+import Main from "./Components/layouts/Main";
 
 const App = () => {
   return (
