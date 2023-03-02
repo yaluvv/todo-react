@@ -1,9 +1,12 @@
 import React from "react";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import TodoAdd from "./TodoAdd";
 import ListItems from "./ListItems";
+import { useTodoStore } from "../../store/store";
+import SkeletonItem from "./SkeletonItem";
 
-const TodoList = ({ data }) => {
+const TodoList = () => {
+  const loading = useTodoStore((state) => state.loading);
   return (
     <Box
       sx={{
@@ -13,7 +16,8 @@ const TodoList = ({ data }) => {
       }}
     >
       <TodoAdd />
-      <ListItems data={data} />
+      {loading && <SkeletonItem />}
+      <ListItems />
     </Box>
   );
 };
