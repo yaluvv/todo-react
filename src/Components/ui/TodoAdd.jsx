@@ -1,9 +1,15 @@
 import React from "react";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Search from "./Search";
 import ListButtons from "./ListButtons";
 
 const TodoAdd = () => {
+  const [value, setValue] = React.useState("");
+
+  const handleChangeValue = (text) => {
+    setValue(text);
+  };
+
   return (
     <Box
       component="form"
@@ -16,8 +22,8 @@ const TodoAdd = () => {
         backgroundColor: "#e8e8e8",
       }}
     >
-      <Search />
-      <ListButtons />
+      <Search value={value} onChangeValue={handleChangeValue} />
+      <ListButtons setValue={setValue} value={value} />
     </Box>
   );
 };
