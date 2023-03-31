@@ -1,8 +1,8 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { useTodoStore } from "../../store/store";
+import { useTodoStore } from "../../store/todo-store";
 
-import Button from "../common/Button";
+import { Button } from "@mui/material";
 
 const ListButtons = ({ setValue, value }) => {
   const addTodo = useTodoStore((state) => state.addTodo);

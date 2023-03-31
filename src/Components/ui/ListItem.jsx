@@ -12,7 +12,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import { useTodoStore } from "../../store/store";
+import { useTodoStore } from "../../store/todo-store";
 
 const ListItem = ({ id, content, created_at, checked }) => {
   const deleteItem = useTodoStore((state) => state.removeTodo);
