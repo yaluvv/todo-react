@@ -1,10 +1,10 @@
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Avatar,
   Button,
   CssBaseline,
   TextField,
-  Link,
   Grid,
   Box,
   Typography,
@@ -13,21 +13,55 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { validation } from "../../utils/validation/validation";
+import { userStore } from "../../store/users-store";
 
-const SignUp = () => {
+const SignUpForm = () => {
   const [error, setError] = React.useState({});
+  const register = userStore((state) => state.register);
   const [data, setData] = React.useState({ email: "", password: "" });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!Object.keys(error).length) {
-      console.log(data);
-    }
-  };
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-    validation(data, setError);
+    setError({});
+    validation(data).then((data) => {
+      if (data) {
+        setError(data);
+      } else {
+        setError({});
+      }
+    });
   }, [data]);
+
+  const handleChange = ({ target }) => {
+    setData((prev) => ({ ...prev, [target.name]: target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (Object.keys(error).length > 0) {
+      return;
+    }
+
+    register(data).then((res) => {
+      if (res.code && res.code !== 200) {
+        if (res.message === "EMAIL_EXISTS") {
+          setError({ email: "Такой e-mail уже есть в базе данных!" });
+        }
+      } else {
+        setError({});
+        navigate("/");
+      }
+    });
+  };
+
+  // if (loading) {
+  //   return (
+  //     <Typography variant="h3" component="h3">
+  //       Загрузка...
+  //     </Typography>
+  //   );
+  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,9 +78,9 @@ const SignUp = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Signup form
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -59,7 +93,7 @@ const SignUp = () => {
                 helperText={error?.email}
                 name="email"
                 autoComplete="email"
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -74,24 +108,21 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
           <Button
+            onClick={(e) => handleSubmit(e)}
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Signup form
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
+            <Link to="/login">Уже есть аккаунт?</Link>
           </Grid>
         </Box>
       </Box>
@@ -99,4 +130,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpForm;
