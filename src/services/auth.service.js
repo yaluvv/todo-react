@@ -4,7 +4,7 @@ import localStorageService from "./localStorage.service";
 const auth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1",
     params: {
-        key: import.meta.env.VITE_REACT_APP_FIREBASE_API_KEY,
+        key: 'AIzaSyBATSgAgSKP5yBcQOaPAU-THeRurUGZezk',
     },
 });
 
